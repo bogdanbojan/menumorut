@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menumorut Wine</title>
+    <title>Menumorut</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <!--<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet">-->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
         /*
            TODO
-                - better video transition from beginning -> end
-                - brighter whites
                 - fix fonts
                 - find pictures
                 - add other pages + pictures
@@ -22,8 +22,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI",
-                "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-family: "Cinzel", serif, "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
 
         body {
@@ -95,9 +94,8 @@
         }
 
         .logo {
-            font-size: 1.2rem;
-            font-weight: 300;
-            letter-spacing: 0.3em;
+            font-size: 1.5rem;
+            font-weight: 400;
             color: white;
             text-decoration: none;
         }
@@ -290,6 +288,52 @@
                 font-size: 1.4rem;
             }
         }
+
+        .options {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 2rem;
+            gap: 10rem;
+            /* Add spacing between items */
+
+        }
+
+        .options a {
+            color: white;
+            text-decoration: none;
+            font-size: 6rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: opacity 0.3s ease;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .options a::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: white;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .options a:hover::after {
+            transform: scaleX(1);
+        }
+
+        @media screen and (max-width: 768px) {
+            .options {
+                flex-direction: column;
+                /* Stack items vertically for smaller screens */
+                align-items: center;
+                /* Center the items */
+                gap: 2rem;
+                /* Adjust spacing for smaller screens */
+            }
+        }
     </style>
 </head>
 
@@ -298,10 +342,10 @@
         <a href="#" class="logo">MENUMORUT</a>
         <button class="mobile-menu-btn">☰</button>
         <div class="nav-links">
-            <a href="#story">OUR STORY</a>
-            <a href="#wines">WINES</a>
+            <a href="#home">HOME</a>
+            <a href="#story">STORY</a>
             <a href="#visit">VISIT</a>
-            <a href="#contact">CONTACT</a>
+            <a href="#shop">SHOP</a>
         </div>
     </nav>
 
@@ -315,10 +359,13 @@
     </div>
 
     <div class="content">
-        <h1>MENUMORUT</h1>
-        <p class="tagline">CRAFTED WITH TRADITION</p>
-        <div class="scroll-indicator">↓</div>
+        <div class="options">
+            <a href="#" data-section="visit">VISIT</a>
+            <a href="#" data-section="drink">DRINK</a>
+            <a href="#" data-section="shop">SHOP</a>
+        </div>
     </div>
+
 
     <script>
         // Mobile menu functionality
@@ -336,6 +383,17 @@
                 navLinks.classList.remove('active');
                 menuBtn.textContent = '☰';
             }
+        });
+
+        const videoPlayer = document.getElementById('video-player');
+        videoPlayer.addEventListener('ended', () => {
+            // Fade out the video
+            videoPlayer.style.opacity = '0';
+            setTimeout(() => {
+                videoPlayer.currentTime = 0;
+                videoPlayer.style.opacity = '1'; // Fade back in
+                videoPlayer.play();
+            }, 500); // Fade duration in milliseconds
         });
     </script>
 </body>
