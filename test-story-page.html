@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story — Menumorut</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Helvetica, Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* Header Styles */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(20px, 4vw, 24px);
+            color: white;
+            margin-right: auto;
+        }
+
+        .nav {
+            display: flex;
+            gap: clamp(30px, 4vw, 40px);
+            margin-left: 60px;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: clamp(14px, 2vw, 16px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            color: white;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-family: 'Cinzel', serif;
+            font-size: clamp(36px, 10vw, 72px);
+            text-align: center;
+            width: 90%;
+        }
+
+        /* Content Sections */
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(24px, 5vw, 36px);
+            margin-bottom: 40px;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .staff-press {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 120px;
+            margin: 80px 0;
+            max-width: 800px;
+        }
+
+        .staff-press h2 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(20px, 4vw, 24px);
+            margin-bottom: 20px;
+        }
+
+        .visit-us-container {
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            padding: 40px 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 120px;
+        }
+
+        .footer h3 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(16px, 3vw, 18px);
+            margin-bottom: 20px;
+        }
+
+        .footer a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 30px;
+            border: 1px solid #333;
+            text-decoration: none;
+            color: #333;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            background: #333;
+            color: white;
+        }
+
+        /* Media Queries */
+        @media (min-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr 1fr;
+                gap: 60px;
+            }
+
+            .staff-press {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footer {
+                grid-template-columns: repeat(3, 1fr);
+                text-align: left;
+            }
+
+            .footer > div {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer > div:nth-child(2) {
+                align-items: center;
+                justify-content: flex-start;
+            }
+
+            .footer > div:last-child {
+                align-items: flex-end;
+                text-align: right;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .header {
+                padding: 15px;
+            }
+
+            .nav {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, 0.9);
+                padding: 20px;
+                flex-direction: column;
+                align-items: center;
+                display: none;
+                margin-left: 0;
+            }
+
+            .nav.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+
+        /* Hover Effects */
+        @media (hover: hover) {
+            .nav a:hover {
+                opacity: 0.8;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .header {
+                position: static;
+                color: black;
+                background: none;
+            }
+
+            .nav, .mobile-menu-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">MENUMORUT</div>
+        <button class="mobile-menu-btn">☰</button>
+        <nav class="nav">
+            <a href="#">Home</a>
+            <a href="#">Story</a>
+            <a href="#">Visit</a>
+            <a href="#">Shop</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <img src="grapes.jpg" alt="Fresh grapes being held">
+        <div class="hero-text">STORY</div>
+    </section>
+
+    <main class="content">
+        <div class="two-column">
+            <div class="title">PRODUCING HIGH QUALITY WINES SINCE 1970.</div>
+            <div>
+                <p>Menumorut Wines is located in the town of Biharia, in the building overlooking the hills. It is here that more than 200 years ago a beautiful story began.The story of the wine cellars where, in the heart of the Crisana area and protected by gentle hills, a wine was born. That wine was then called Menumorut, in honor of the ruler of the lands where it was produced for the first time.</p>
+                <p>Today the Family continues the work that began more than two centuries ago: producing high quality wines meant to enrich, year after year, the history of this important cellar where modernity and tradition meet and where a great heritage of vineyards and knowledge has been passed down from parents to children generations.</p>
+                <p>Armed with great winemaking experience, the people here, present themselves as faithful interpreters of the native vineyards and their locations, respecting them and rigorously preserving the typical qualities thanks to the vinification of the grapes that come from their own vineyards and the winemaking processes selected over many years of activity, focusing on the location and the cultivation capacities of the single vines.</p>
+            </div>
+        </div>
+
+        <div class="staff-press">
+            <div>
+                <h2>LEAD STAFF</h2>
+                <p>Andrei Mihai<br>Owner</p>
+            </div>
+            <div>
+                <h2>RECENT PRESS</h2>
+                <p>MILLESIME<br>Feature</p>
+            </div>
+        </div>
+
+        <div class="visit-us-container">
+            <a href="#" class="button">Visit us</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div>
+            <h3>CONTACT</h3>
+            <p>27 Bihorului Street<br>Biharia, RO 41234</p>
+            <a href="mailto:contact@menumorut.com">contact@menumorut.com</a><br>
+            <a href="tel:+40755278720">(+40) 755-278-720</a>
+        </div>
+        <div>
+            <h3>MENUMORUT</h3>
+            <div class="social-icons">
+                <a href="#">★</a>
+                <a href="#">◆</a>
+                <a href="#">♦</a>
+            </div>
+            <small>Made by <a href="#">CB-STUDIO</a>. © 2020 Menumorut Wines</small>
+        </div>
+        <div>
+            <h3>HOURS</h3>
+            <p>Mon–Wed 6–11<br>Thu–Sat 4–12<br>Sun 3–10</p>
+            <a href="#" class="button">Make a Reservation</a>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('.nav');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.header')) {
+                nav.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
