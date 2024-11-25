@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,6 +32,8 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
+            transition: background-color 0.3s ease;
+            /* Add smooth transition */
         }
 
         .logo {
@@ -38,6 +41,19 @@
             font-size: clamp(20px, 4vw, 24px);
             color: white;
             margin-right: auto;
+            transition: color 0.3s ease;
+            /* Add smooth transition */
+        }
+
+        /* Add new class for scrolled state */
+        .header.scrolled {
+            background-color: white;
+            /* Add white background when scrolled */
+        }
+
+        .header.scrolled .logo {
+            color: black;
+            /* Change logo color to black when scrolled */
         }
 
         .nav {
@@ -113,6 +129,10 @@
             gap: 120px;
             margin: 80px 0;
             max-width: 800px;
+            margin-left: 52.5%;
+            /* Added to align to the right */
+            width: 50%;
+            /* Added to match the right column width */
         }
 
         .staff-press h2 {
@@ -146,6 +166,37 @@
         .footer a {
             color: #333;
             text-decoration: none;
+        }
+
+        .footer .hours-section {
+            text-align: right;
+        }
+
+        .footer .hours-section a {
+            display: inline;
+            border: none;
+            padding: 0;
+            margin: 0;
+            font-weight: normal;
+        }
+
+        .footer .contact-links a {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Remove button styles */
+        .footer .button {
+            display: inline;
+            padding: 0;
+            border: none;
+            margin: 0;
+            transition: none;
+        }
+
+        .footer .button:hover {
+            background: transparent;
+            color: #333;
         }
 
         .social-icons {
@@ -186,18 +237,18 @@
                 text-align: left;
             }
 
-            .footer > div {
+            .footer>div {
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
             }
 
-            .footer > div:nth-child(2) {
+            .footer>div:nth-child(2) {
                 align-items: center;
                 justify-content: flex-start;
             }
 
-            .footer > div:last-child {
+            .footer>div:last-child {
                 align-items: flex-end;
                 text-align: right;
             }
@@ -232,16 +283,19 @@
             .content {
                 padding: 20px;
             }
+
+            .staff-press {
+                width: 100%;
+                margin-left: 0;
+            }
         }
 
-        /* Hover Effects */
         @media (hover: hover) {
             .nav a:hover {
                 opacity: 0.8;
             }
         }
 
-        /* Print Styles */
         @media print {
             .header {
                 position: static;
@@ -249,12 +303,42 @@
                 background: none;
             }
 
-            .nav, .mobile-menu-btn {
+            .nav,
+            .mobile-menu-btn {
                 display: none;
             }
         }
+
+        /* New Styles for Footer */
+        .footer .logo {
+            font-size: clamp(24px, 5vw, 36px); /* Increase logo size */
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .footer .contact-links a,
+        .footer .social-icons a,
+        .footer .button {
+            text-decoration: underline; /* Add underline to links */
+        }
+
+        .footer .contact-links a,
+        .footer .social-icons a,
+        .footer .button {
+            display: inline-block; /* Ensure alignment */
+            margin-bottom: 5px; /* Add spacing between links */
+        }
+
+        .footer .social-icons {
+            justify-content: flex-start; /* Align icons to the left */
+        }
+
+        .footer .button {
+            margin-top: 10px; /* Adjust margin for button */
+        }
     </style>
 </head>
+
 <body>
     <header class="header">
         <div class="logo">MENUMORUT</div>
@@ -276,9 +360,19 @@
         <div class="two-column">
             <div class="title">PRODUCING HIGH QUALITY WINES SINCE 1970.</div>
             <div>
-                <p>Menumorut Wines is located in the town of Biharia, in the building overlooking the hills. It is here that more than 200 years ago a beautiful story began.The story of the wine cellars where, in the heart of the Crisana area and protected by gentle hills, a wine was born. That wine was then called Menumorut, in honor of the ruler of the lands where it was produced for the first time.</p>
-                <p>Today the Family continues the work that began more than two centuries ago: producing high quality wines meant to enrich, year after year, the history of this important cellar where modernity and tradition meet and where a great heritage of vineyards and knowledge has been passed down from parents to children generations.</p>
-                <p>Armed with great winemaking experience, the people here, present themselves as faithful interpreters of the native vineyards and their locations, respecting them and rigorously preserving the typical qualities thanks to the vinification of the grapes that come from their own vineyards and the winemaking processes selected over many years of activity, focusing on the location and the cultivation capacities of the single vines.</p>
+                <p>Menumorut Wines is located in the town of Biharia, in the building overlooking the hills. It is here
+                    that more than 200 years ago a beautiful story began.The story of the wine cellars where, in the
+                    heart of the Crisana area and protected by gentle hills, a wine was born. That wine was then called
+                    Menumorut, in honor of the ruler of the lands where it was produced for the first time.</p>
+                <p>Today the Family continues the work that began more than two centuries ago: producing high quality
+                    wines meant to enrich, year after year, the history of this important cellar where modernity and
+                    tradition meet and where a great heritage of vineyards and knowledge has been passed down from
+                    parents to children generations.</p>
+                <p>Armed with great winemaking experience, the people here, present themselves as faithful interpreters
+                    of the native vineyards and their locations, respecting them and rigorously preserving the typical
+                    qualities thanks to the vinification of the grapes that come from their own vineyards and the
+                    winemaking processes selected over many years of activity, focusing on the location and the
+                    cultivation capacities of the single vines.</p>
             </div>
         </div>
 
@@ -302,17 +396,20 @@
         <div>
             <h3>CONTACT</h3>
             <p>27 Bihorului Street<br>Biharia, RO 41234</p>
-            <a href="mailto:contact@menumorut.com">contact@menumorut.com</a><br>
-            <a href="tel:+40755278720">(+40) 755-278-720</a>
+            <div class="contact-links">
+                <a href="mailto:contact@menumorut.com">contact@menumorut.com</a>
+                <a href="tel:+40755278720">(+40) 755-278-720</a>
+            </div>
         </div>
         <div>
-            <h3>MENUMORUT</h3>
+            <h3 class="logo">MENUMORUT</h3>
             <div class="social-icons">
                 <a href="#">★</a>
                 <a href="#">◆</a>
                 <a href="#">♦</a>
             </div>
-            <small>Made by <a href="#">CB-STUDIO</a>. © 2020 Menumorut Wines</small>
+            <!-- TODO change the class of this -->
+            <small class="contact-links">Made by <a href="#">CB-STUDIO</a>. © 2020 Menumorut Wines</small>
         </div>
         <div>
             <h3>HOURS</h3>
@@ -324,7 +421,22 @@
     <script>
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const nav = document.querySelector('.nav');
+        const header = document.querySelector('.header');
 
+        // Add scroll event listener
+        window.addEventListener('scroll', () => {
+            // Get the height of the hero section
+            const heroHeight = document.querySelector('.hero').offsetHeight;
+
+            // Check if we've scrolled past the hero section
+            if (window.scrollY > heroHeight - header.offsetHeight) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Keep existing mobile menu functionality
         mobileMenuBtn.addEventListener('click', () => {
             nav.classList.toggle('active');
         });
@@ -336,4 +448,5 @@
         });
     </script>
 </body>
+
 </html>
