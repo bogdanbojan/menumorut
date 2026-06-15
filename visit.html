@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visit — Menumorut</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(20px, 4vw, 24px);
+            color: white;
+            margin-right: auto;
+            transition: color 0.3s ease;
+        }
+
+        .header.scrolled {
+            background-color: white;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+        }
+
+        .header.scrolled .logo {
+            color: black;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-left: 60px;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.8rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav .cart {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            position: relative;
+        }
+
+        .nav .cart svg {
+            width: 22px;
+            height: 22px;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        .nav .cart .cart-count {
+            font-size: 11px;
+            line-height: 1;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            color: white;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            height: 65vh;
+            min-height: 420px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+        }
+
+        .hero-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-family: 'Cinzel', serif;
+            font-weight: 500;
+            font-size: clamp(32px, 8vw, 64px);
+            letter-spacing: 0.04em;
+            text-align: center;
+            width: 90%;
+            z-index: 2;
+        }
+
+        /* Reservation widget (visual only) */
+        .reservation {
+            background: #f0f0f0;
+            max-width: 820px;
+            margin: 80px auto 0;
+            padding: 48px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .res-fields {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .res-field {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 12px 16px;
+            min-width: 200px;
+            flex: 1;
+            max-width: 220px;
+            color: #333;
+        }
+
+        .res-field svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        .res-field .caret {
+            margin-left: auto;
+            opacity: 0.5;
+        }
+
+        .find-table {
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 14px 48px;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+        }
+
+        /* Info sections */
+        .info {
+            text-align: center;
+            padding: 80px 20px 40px;
+        }
+
+        .info-block {
+            margin-bottom: 80px;
+        }
+
+        .info-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-block h2 {
+            font-family: 'Cinzel', serif;
+            font-weight: 500;
+            font-size: clamp(28px, 5vw, 40px);
+            letter-spacing: 0.04em;
+            margin-bottom: 24px;
+        }
+
+        .info-block p {
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        .footer {
+            background: #fff;
+            padding: 60px 40px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            text-align: center;
+        }
+
+        .footer h3 {
+            font-family: 'Cinzel', serif;
+            font-weight: 500;
+            font-size: 18px;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+        }
+
+        .footer p {
+            margin-bottom: 12px;
+        }
+
+        .footer a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .footer .contact-links a {
+            display: block;
+            text-decoration: underline;
+            margin-bottom: 4px;
+        }
+
+        .footer-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 18px;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .social-icons a {
+            color: #111;
+            display: inline-flex;
+        }
+
+        .social-icons svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .footer-brand small {
+            display: block;
+        }
+
+        .footer-brand small a {
+            text-decoration: underline;
+        }
+
+        .footer-reserve {
+            display: inline-block;
+            text-decoration: underline;
+            margin-top: 12px;
+        }
+
+        /* Desktop */
+        @media (min-width: 768px) {
+            .footer {
+                grid-template-columns: repeat(3, 1fr);
+                padding: 80px 60px;
+                align-items: start;
+                text-align: left;
+            }
+
+            .footer-contact {
+                text-align: left;
+            }
+
+            .footer-brand {
+                text-align: center;
+            }
+
+            .footer-hours {
+                text-align: right;
+            }
+
+            .header.scrolled .nav a,
+            .header.scrolled .mobile-menu-btn {
+                color: black;
+            }
+        }
+
+        .header.scrolled .mobile-menu-btn {
+            color: black;
+        }
+
+        /* Mobile */
+        @media (max-width: 767px) {
+            .header {
+                padding: 15px;
+            }
+
+            .nav {
+                position: fixed;
+                top: 56px;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, 0.92);
+                padding: 24px;
+                flex-direction: column;
+                align-items: center;
+                display: none;
+                margin-left: 0;
+                gap: 20px;
+            }
+
+            .nav.active {
+                display: flex;
+            }
+
+            .nav a {
+                color: white !important;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .res-field {
+                max-width: 320px;
+            }
+        }
+
+        @media (hover: hover) {
+            .nav a:hover {
+                opacity: 0.8;
+            }
+
+            .find-table:hover {
+                opacity: 0.85;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">MENUMORUT</div>
+        <button class="mobile-menu-btn" aria-label="Menu">☰</button>
+        <nav class="nav">
+            <a href="index.html">Home</a>
+            <a href="story.html">Story</a>
+            <a href="visit.html">Visit</a>
+            <a href="shop.html">Shop</a>
+            <a href="#" class="cart" aria-label="Cart">
+                <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span class="cart-count">0</span>
+            </a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <img src="reservation_hero.jpg" alt="">
+        <h1 class="hero-text">MAKE A RESERVATION</h1>
+    </section>
+
+    <main>
+        <div class="reservation">
+            <div class="res-fields">
+                <div class="res-field">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>2 people</span>
+                    <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="res-field">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                        <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span>Jul 18, 2020</span>
+                    <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="res-field">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <polyline points="12 7 12 12 15 14"></polyline>
+                    </svg>
+                    <span>7:00 PM</span>
+                    <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+            </div>
+            <button class="find-table" type="button">Find a Table</button>
+        </div>
+
+        <section class="info">
+            <div class="info-block">
+                <h2>CONTACT</h2>
+                <p>(+40) 751 131 116<br>contact@menumorut.com</p>
+            </div>
+            <div class="info-block">
+                <h2>LOCATION</h2>
+                <p>27 Bihorului Street<br>Biharia, RO 41234</p>
+            </div>
+            <div class="info-block">
+                <h2>HOURS</h2>
+                <p>Mon–Wed 6–11<br>Thu–Sat 4–12<br>Sun 3–10</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-col footer-contact">
+            <h3>CONTACT</h3>
+            <p>27 Bihorului Street<br>Biharia, RO 41234</p>
+            <div class="contact-links">
+                <a href="mailto:contact@menumorut.com">contact@menumorut.com</a>
+                <a href="tel:+40751131116">(+40) 751 131 116</a>
+            </div>
+        </div>
+        <div class="footer-col footer-brand">
+            <div class="footer-logo">MENUMORUT</div>
+            <div class="social-icons">
+                <a href="#" aria-label="Yelp">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                </a>
+                <a href="#" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="2" width="20" height="20" rx="5"></rect>
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <circle cx="17.5" cy="6.5" r="1.3" fill="currentColor" stroke="none"></circle>
+                    </svg>
+                </a>
+                <a href="#" aria-label="Twitter">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                    </svg>
+                </a>
+            </div>
+            <small>Made by <a href="#">CB-STUDIO</a>, © 2020 Menumorut Wines</small>
+        </div>
+        <div class="footer-col footer-hours">
+            <h3>HOURS</h3>
+            <p>Mon–Wed 6–11<br>Thu–Sat 4–12<br>Sun 3–10</p>
+            <a href="#" class="footer-reserve">Make a Reservation</a>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('.nav');
+        const header = document.querySelector('.header');
+        const hero = document.querySelector('.hero');
+
+        window.addEventListener('scroll', () => {
+            const heroHeight = hero.offsetHeight;
+            if (window.scrollY > heroHeight - header.offsetHeight) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        mobileMenuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.header')) {
+                nav.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+
+</html>
