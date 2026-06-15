@@ -339,11 +339,11 @@
 
 <body>
     <nav>
-        <a href="#" class="logo">MENUMORUT</a>
+        <a href="index.html" class="logo">MENUMORUT</a>
         <button class="mobile-menu-btn">☰</button>
         <div class="nav-links">
-            <a href="#home">HOME</a>
-            <a href="#story">STORY</a>
+            <a href="index.html">HOME</a>
+            <a href="story.html">STORY</a>
             <a href="#visit">VISIT</a>
             <a href="#shop">SHOP</a>
         </div>
@@ -352,8 +352,10 @@
     <div class="video-container">
         <div class="video-background">
             <iframe
-                src="https://www.youtube.com/embed/Ojoh6QeuqOU?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&mute=1&playlist=Ojoh6QeuqOU"
-                frameborder="0" allowfullscreen>
+                src="https://www.youtube.com/embed/Ojoh6QeuqOU?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&mute=1&playsinline=1&playlist=Ojoh6QeuqOU"
+                frameborder="0"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowfullscreen>
             </iframe>
         </div>
     </div>
@@ -383,17 +385,6 @@
                 navLinks.classList.remove('active');
                 menuBtn.textContent = '☰';
             }
-        });
-
-        const videoPlayer = document.getElementById('video-player');
-        videoPlayer.addEventListener('ended', () => {
-            // Fade out the video
-            videoPlayer.style.opacity = '0';
-            setTimeout(() => {
-                videoPlayer.currentTime = 0;
-                videoPlayer.style.opacity = '1'; // Fade back in
-                videoPlayer.play();
-            }, 500); // Fade duration in milliseconds
         });
     </script>
 </body>
