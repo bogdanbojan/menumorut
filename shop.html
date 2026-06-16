@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
     <title>Shop — Menumorut</title>
     <script>
         // No-FOUC language bootstrap (see i18n.js).
@@ -208,8 +209,8 @@
         /* Hero */
         .hero {
             position: relative;
-            height: 50vh;
-            min-height: 340px;
+            height: 65vh;
+            min-height: 420px;
             width: 100%;
             overflow: hidden;
         }
@@ -529,7 +530,7 @@
             <a href="story.html" data-i18n="nav.story">Story</a>
             <a href="visit.html" data-i18n="nav.visit">Visit</a>
             <a href="shop.html" data-i18n="nav.shop">Shop</a>
-            <a href="#" class="cart" aria-label="Cart" data-i18n-attr="aria-label:a11y.cart">
+            <a href="cart.html" class="cart" aria-label="Cart" data-i18n-attr="aria-label:a11y.cart">
                 <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="9" cy="21" r="1"></circle>
                     <circle cx="20" cy="21" r="1"></circle>
@@ -568,8 +569,8 @@
                     structured tannins. Textured and intriguing in sweet oak tones, the fruit components are weighted in
                     cassis and black cherry, with a lasting mineral finish of crushed rock.</p>
                 <label class="qty-label" for="qty-red" data-i18n="shop.quantity">Quantity:</label>
-                <input class="qty" id="qty-red" type="number" value="1" min="1">
-                <button class="add-cart" type="button" data-i18n="shop.addCart">Add to Cart</button>
+                <input class="qty" id="qty-red" type="number" value="1" min="1" data-cart-qty="red">
+                <button class="add-cart" type="button" data-cart-add="red" data-i18n="shop.addCart">Add to Cart</button>
             </div>
         </article>
 
@@ -582,8 +583,8 @@
                     elegant medium-bodied palate along with mature yellow apple and saline. A note of chestnut honey
                     wraps around the finish while fresh acidity keeps it balanced.</p>
                 <label class="qty-label" for="qty-white" data-i18n="shop.quantity">Quantity:</label>
-                <input class="qty" id="qty-white" type="number" value="1" min="1">
-                <button class="add-cart" type="button" data-i18n="shop.addCart">Add to Cart</button>
+                <input class="qty" id="qty-white" type="number" value="1" min="1" data-cart-qty="white">
+                <button class="add-cart" type="button" data-cart-add="white" data-i18n="shop.addCart">Add to Cart</button>
             </div>
         </article>
 
@@ -597,8 +598,8 @@
                     bright acidity and a tangy slick of wet stone. Cherry skin astringency marks the close, extending the
                     fruit flavors into a medium finish.</p>
                 <label class="qty-label" for="qty-rose" data-i18n="shop.quantity">Quantity:</label>
-                <input class="qty" id="qty-rose" type="number" value="1" min="1">
-                <button class="add-cart" type="button" data-i18n="shop.addCart">Add to Cart</button>
+                <input class="qty" id="qty-rose" type="number" value="1" min="1" data-cart-qty="rose">
+                <button class="add-cart" type="button" data-cart-add="rose" data-i18n="shop.addCart">Add to Cart</button>
             </div>
         </article>
     </main>
@@ -681,6 +682,7 @@
         });
     </script>
     <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/cart.js"></script>
 </body>
 
 </html>

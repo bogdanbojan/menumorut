@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <title>Thank you — Menumorut</title>
+    <script>
+        // No-FOUC language bootstrap (see i18n.js).
+        (function () {
+            try {
+                var m = location.search.match(/[?&]lang=(en|ro|hu)/i);
+                var lang = (m && m[1] || localStorage.getItem('menumorut.lang') || 'en').toLowerCase();
+                if (['en', 'ro', 'hu'].indexOf(lang) === -1) lang = 'en';
+                document.documentElement.lang = lang;
+                if (lang !== 'en') {
+                    document.documentElement.className += ' i18n-cloak';
+                    setTimeout(function () {
+                        document.documentElement.classList.remove('i18n-cloak');
+                    }, 800);
+                }
+            } catch (e) { }
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            padding: 1.25rem 2rem;
+            display: flex;
+            align-items: center;
+            background: #fff;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(20px, 4vw, 24px);
+            color: #111;
+            text-decoration: none;
+        }
+
+        .i18n-cloak body {
+            visibility: hidden;
+        }
+
+        main {
+            flex: 1 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 24px;
+        }
+
+        .thanks {
+            max-width: 520px;
+        }
+
+        .thanks .check {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 28px;
+            color: #2e7d4f;
+        }
+
+        .thanks h1 {
+            font-family: 'Cinzel', serif;
+            font-weight: 500;
+            font-size: clamp(28px, 5vw, 40px);
+            letter-spacing: 0.04em;
+            margin-bottom: 16px;
+        }
+
+        .thanks p {
+            color: #555;
+            margin-bottom: 32px;
+        }
+
+        .thanks a {
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            text-decoration: none;
+            padding: 14px 40px;
+            font-size: 13px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .footer {
+            flex-shrink: 0;
+            background: #fff;
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            color: #555;
+            font-size: 14px;
+        }
+
+        @media (hover: hover) {
+            .thanks a:hover {
+                opacity: 0.85;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <a href="index.html" class="logo">MENUMORUT</a>
+    </header>
+
+    <!-- The presence of this hook tells cart.js to empty the cart on load. -->
+    <main data-cart-clear-on-load>
+        <div class="thanks">
+            <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="8 12 11 15 16 9"></polyline>
+            </svg>
+            <h1 data-i18n="success.title">Thank you for your order</h1>
+            <p data-i18n="success.body">Your payment was successful. A confirmation email is on its way, and we'll be in touch about delivery.</p>
+            <a href="shop.html" data-i18n="success.cta">Back to the shop</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 Menumorut Wines · <a href="index.html" data-i18n="nav.home">Home</a></p>
+    </footer>
+
+    <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/cart.js"></script>
+</body>
+
+</html>

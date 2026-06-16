@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
     <title>Visit — Menumorut</title>
     <script>
         // No-FOUC language bootstrap (see i18n.js).
@@ -242,58 +243,41 @@
             z-index: 2;
         }
 
-        /* Reservation widget (visual only) */
+        /* Reservation widget — opens the live Cal.com booking */
         .reservation {
             background: #f0f0f0;
             max-width: 820px;
             margin: 80px auto 0;
-            padding: 48px 24px;
+            padding: 56px 24px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 24px;
+            gap: 20px;
+            text-align: center;
         }
 
-        .res-fields {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 16px;
-            width: 100%;
+        .reservation h2 {
+            font-family: 'Cinzel', serif;
+            font-weight: 500;
+            font-size: clamp(22px, 4vw, 30px);
+            letter-spacing: 0.04em;
         }
 
-        .res-field {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: #fff;
-            border: 1px solid #ddd;
-            padding: 12px 16px;
-            min-width: 200px;
-            flex: 1;
-            max-width: 220px;
-            color: #333;
+        .reservation p {
+            max-width: 520px;
+            color: #555;
         }
 
-        .res-field svg {
-            width: 16px;
-            height: 16px;
-            flex-shrink: 0;
-        }
-
-        .res-field .caret {
-            margin-left: auto;
-            opacity: 0.5;
-        }
-
-        .find-table {
+        .book-room {
             background: #000;
             color: #fff;
             border: none;
-            padding: 14px 48px;
+            padding: 15px 48px;
+            margin-top: 8px;
             font-size: 13px;
             font-weight: bold;
             letter-spacing: 0.05em;
+            text-transform: uppercase;
             cursor: pointer;
         }
 
@@ -321,6 +305,13 @@
 
         .info-block p {
             line-height: 1.8;
+        }
+
+        /* Keep tel:/mailto links in the contact block the same colour as the
+           surrounding text (overrides UA defaults and iOS auto-link styling). */
+        .info-block a {
+            color: inherit;
+            text-decoration: none;
         }
 
         /* Footer */
@@ -465,10 +456,6 @@
             .mobile-menu-btn {
                 display: block;
             }
-
-            .res-field {
-                max-width: 320px;
-            }
         }
 
         @media (hover: hover) {
@@ -476,7 +463,7 @@
                 opacity: 0.8;
             }
 
-            .find-table:hover {
+            .book-room:hover {
                 opacity: 0.85;
             }
         }
@@ -492,7 +479,7 @@
             <a href="story.html" data-i18n="nav.story">Story</a>
             <a href="visit.html" data-i18n="nav.visit">Visit</a>
             <a href="shop.html" data-i18n="nav.shop">Shop</a>
-            <a href="#" class="cart" aria-label="Cart" data-i18n-attr="aria-label:a11y.cart">
+            <a href="cart.html" class="cart" aria-label="Cart" data-i18n-attr="aria-label:a11y.cart">
                 <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="9" cy="21" r="1"></circle>
                     <circle cx="20" cy="21" r="1"></circle>
@@ -518,52 +505,24 @@
 
     <section class="hero">
         <img src="assets/images/reservation-hero.jpg" alt="">
-        <h1 class="hero-text" data-i18n="hero.reservation">MAKE A RESERVATION</h1>
+        <h1 class="hero-text" data-i18n="hero.reservation">BOOK A ROOM</h1>
     </section>
 
     <main>
         <div class="reservation">
-            <div class="res-fields">
-                <div class="res-field">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                    <span data-i18n="visit.party">2 people</span>
-                    <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="res-field">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                        <rect x="3" y="4" width="18" height="18" rx="2"></rect>
-                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                    </svg>
-                    <span>Jul 18, 2020</span>
-                    <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-                <div class="res-field">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                        <circle cx="12" cy="12" r="9"></circle>
-                        <polyline points="12 7 12 12 15 14"></polyline>
-                    </svg>
-                    <span>7:00 PM</span>
-                    <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </div>
-            </div>
-            <button class="find-table" type="button" data-i18n="visit.findTable">Find a Table</button>
+            <h2 data-i18n="visit.stayTitle">Stay at the estate</h2>
+            <p data-i18n="visit.stayText">Wake up among the vineyards. Pick your check-in and check-out dates and the number of guests in our live booking calendar.</p>
+            <button class="book-room" type="button"
+                data-cal-namespace="stay"
+                data-cal-link="REPLACE_ME_calcom_username/stay"
+                data-cal-config='{"layout":"month_view"}'
+                data-i18n="visit.bookRoom">Book a Room</button>
         </div>
 
         <section class="info">
             <div class="info-block">
                 <h2 data-i18n="label.contact">CONTACT</h2>
-                <p>(+40) 751 131 116<br>contact@menumorut.com</p>
+                <p><a href="tel:+40751131116">(+40) 751 131 116</a><br><a href="mailto:contact@menumorut.com">contact@menumorut.com</a></p>
             </div>
             <div class="info-block">
                 <h2 data-i18n="label.location">LOCATION</h2>
@@ -653,7 +612,35 @@
             }
         });
     </script>
+    <!--
+      Cal.com booking embed. Set data-cal-link on the "Book a Room" button to
+      your own "<username>/<event-slug>" (e.g. "menumorut/stay"). Create the
+      event type in your free Cal.com account as a multi-night stay and add
+      booking questions for guests / check-in / check-out as needed.
+    -->
+    <script>
+        (function (C, A, L) {
+            let p = function (a, ar) { a.q.push(ar); };
+            let d = C.document;
+            C.Cal = C.Cal || function () {
+                let cal = C.Cal; let ar = arguments;
+                if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; }
+                if (ar[0] === L) {
+                    const api = function () { p(api, arguments); };
+                    const namespace = ar[1];
+                    api.q = api.q || [];
+                    if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); }
+                    else p(cal, ar);
+                    return;
+                }
+                p(cal, ar);
+            };
+        })(window, "https://app.cal.com/embed/embed.js", "init");
+        Cal("init", "stay", { origin: "https://cal.com" });
+        Cal.ns.stay("ui", { hideEventTypeDetails: false, layout: "month_view" });
+    </script>
     <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/cart.js"></script>
 </body>
 
 </html>
