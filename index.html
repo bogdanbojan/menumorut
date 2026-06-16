@@ -5,10 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menumorut</title>
+    <script>
+        // No-FOUC language bootstrap: set <html lang> early and cloak only
+        // a non-English first paint (failsafe reveals after 800ms if JS fails).
+        (function () {
+            try {
+                var m = location.search.match(/[?&]lang=(en|ro|hu)/i);
+                var lang = (m && m[1] || localStorage.getItem('menumorut.lang') || 'en').toLowerCase();
+                if (['en', 'ro', 'hu'].indexOf(lang) === -1) lang = 'en';
+                document.documentElement.lang = lang;
+                if (lang !== 'en') {
+                    document.documentElement.className += ' i18n-cloak';
+                    setTimeout(function () {
+                        document.documentElement.classList.remove('i18n-cloak');
+                    }, 800);
+                }
+            } catch (e) { }
+        })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!--<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet">-->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
         /*
@@ -84,7 +102,8 @@
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-family: 'Cinzel', serif;
+            font-size: clamp(20px, 4vw, 24px);
             font-weight: 400;
             color: white;
             text-decoration: none;
@@ -100,6 +119,7 @@
             text-decoration: none;
             font-size: 0.8rem;
             letter-spacing: 0.1em;
+            text-transform: uppercase;
             transition: opacity 0.3s ease;
         }
 
@@ -143,7 +163,6 @@
 
         h1,
         .tagline,
-        .logo,
         .nav-links a {
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
@@ -176,10 +195,6 @@
 
             .tagline {
                 font-size: 0.9rem;
-            }
-
-            .logo {
-                font-size: 1rem;
             }
 
             nav {
@@ -230,11 +245,6 @@
                 letter-spacing: 0.15em;
             }
 
-            .logo {
-                font-size: 0.9rem;
-                letter-spacing: 0.2em;
-            }
-
             nav {
                 padding: 1rem;
             }
@@ -275,7 +285,7 @@
             display: flex;
             justify-content: space-around;
             margin-top: 2rem;
-            gap: 10rem;
+            gap: clamp(2rem, 6vw, 6rem);
             /* Add spacing between items */
 
         }
@@ -345,6 +355,94 @@
             letter-spacing: 0;
         }
 
+        /* No-FOUC cloak (toggled by the head bootstrap for non-English) */
+        .i18n-cloak body {
+            visibility: hidden;
+        }
+
+        /* Language switcher */
+        .lang-switch {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            color: #fff;
+        }
+
+        .lang-toggle {
+            -webkit-appearance: none;
+            appearance: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: none;
+            border: 0;
+            margin: 0;
+            padding: 0;
+            font: inherit;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: currentColor;
+            text-shadow: inherit;
+            cursor: pointer;
+        }
+
+        .lang-caret {
+            width: 9px;
+            height: 9px;
+            transition: transform 0.2s ease;
+        }
+
+        .lang-switch.open .lang-caret {
+            transform: rotate(180deg);
+        }
+
+        .lang-menu {
+            position: absolute;
+            top: calc(100% + 12px);
+            right: 0;
+            min-width: 134px;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            padding: 6px 0;
+            display: none;
+            z-index: 1100;
+        }
+
+        .lang-switch.open .lang-menu {
+            display: block;
+        }
+
+        .lang-menu button {
+            -webkit-appearance: none;
+            appearance: none;
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: 0;
+            margin: 0;
+            padding: 9px 18px;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 0.82rem;
+            letter-spacing: 0.02em;
+            text-transform: none;
+            text-shadow: none;
+            color: #333;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .lang-menu button:hover {
+            background: #f4f3f0;
+        }
+
+        .lang-menu button.is-active {
+            font-weight: 700;
+            color: #111;
+        }
+
         /* Nav turns solid white once past the hero */
         nav.scrolled {
             background: #fff;
@@ -359,7 +457,8 @@
         /* Desktop nav links go dark on the white bar; the mobile
            overlay keeps white links so they stay readable on its dark panel */
         @media screen and (min-width: 641px) {
-            nav.scrolled .nav-links a {
+            nav.scrolled .nav-links a,
+            nav.scrolled .lang-switch {
                 color: #111;
                 text-shadow: none;
             }
@@ -467,13 +566,13 @@
 <body>
     <nav>
         <a href="index.html" class="logo">MENUMORUT</a>
-        <button class="mobile-menu-btn" aria-label="Menu">☰</button>
-        <div class="nav-links">
-            <a href="index.html">HOME</a>
-            <a href="story.html">STORY</a>
-            <a href="visit.html">VISIT</a>
-            <a href="shop.html">SHOP</a>
-            <a href="#" class="cart" aria-label="Cart">
+        <button class="mobile-menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="primaryNav" data-i18n-attr="aria-label:a11y.menu">☰</button>
+        <div class="nav-links" id="primaryNav">
+            <a href="index.html" data-i18n="nav.home">HOME</a>
+            <a href="story.html" data-i18n="nav.story">STORY</a>
+            <a href="visit.html" data-i18n="nav.visit">VISIT</a>
+            <a href="shop.html" data-i18n="nav.shop">SHOP</a>
+            <a href="#" class="cart" aria-label="Cart" data-i18n-attr="aria-label:a11y.cart">
                 <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="9" cy="21" r="1"></circle>
                     <circle cx="20" cy="21" r="1"></circle>
@@ -481,26 +580,39 @@
                 </svg>
                 <span class="cart-count">0</span>
             </a>
+            <div class="lang-switch" role="group" aria-label="Language" data-i18n-attr="aria-label:a11y.language">
+                <button type="button" class="lang-toggle" data-lang-toggle aria-haspopup="true" aria-expanded="false">
+                    <span data-lang-current>EN</span>
+                    <svg class="lang-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                <div class="lang-menu" role="menu">
+                    <button type="button" role="menuitem" data-lang-switch="en" lang="en">English</button>
+                    <button type="button" role="menuitem" data-lang-switch="ro" lang="ro">Română</button>
+                    <button type="button" role="menuitem" data-lang-switch="hu" lang="hu">Magyar</button>
+                </div>
+            </div>
         </div>
     </nav>
 
     <div class="video-container">
-        <video class="video-background" autoplay muted loop playsinline poster="grapes.jpg">
-            <source src="hero.mp4" type="video/mp4">
+        <video class="video-background" autoplay muted loop playsinline poster="assets/images/grapes.jpg">
+            <source src="assets/video/hero.mp4" type="video/mp4">
         </video>
     </div>
 
     <div class="content">
         <div class="options">
-            <a href="visit.html" data-section="visit">VISIT</a>
-            <a href="story.html" data-section="drink">DRINK</a>
-            <a href="shop.html" data-section="shop">SHOP</a>
+            <a href="visit.html" data-section="visit" data-i18n="home.visit">VISIT</a>
+            <a href="story.html" data-section="drink" data-i18n="home.drink">DRINK</a>
+            <a href="shop.html" data-section="shop" data-i18n="home.shop">SHOP</a>
         </div>
     </div>
 
     <footer class="footer">
         <div class="footer-col footer-contact">
-            <h3>CONTACT</h3>
+            <h3 data-i18n="label.contact">CONTACT</h3>
             <p>27 Bihorului Street<br>Biharia, RO 41234</p>
             <div class="contact-links">
                 <a href="mailto:contact@menumorut.com">contact@menumorut.com</a>
@@ -528,12 +640,12 @@
                     </svg>
                 </a>
             </div>
-            <small>Made by <a href="#">CB-STUDIO</a>, © 2026 Menumorut Wines</small>
+            <small><span data-i18n="footer.madeBy">Made by</span> <a href="#">CB-STUDIO</a>, © 2026 Menumorut Wines</small>
         </div>
         <div class="footer-col footer-hours">
-            <h3>HOURS</h3>
-            <p>Mon–Wed 6–11<br>Thu–Sat 4–12<br>Sun 3–10</p>
-            <a href="visit.html" class="footer-reserve">Make a Reservation</a>
+            <h3 data-i18n="label.hours">HOURS</h3>
+            <p><span data-i18n="hours.l1">Mon–Wed 6–11</span><br><span data-i18n="hours.l2">Thu–Sat 4–12</span><br><span data-i18n="hours.l3">Sun 3–10</span></p>
+            <a href="visit.html" class="footer-reserve" data-i18n="label.reserve">Make a Reservation</a>
         </div>
     </footer>
 
@@ -544,10 +656,19 @@
         const navLinks = document.querySelector('.nav-links');
         const navBar = document.querySelector('nav');
 
-        menuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            menuBtn.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const open = !navLinks.classList.contains('active');
+            navLinks.classList.toggle('active', open);
+            menuBtn.textContent = open ? '\u2715' : '\u2630';
+            menuBtn.setAttribute('aria-expanded', String(open));
         });
+
+        const closeMenu = () => {
+            navLinks.classList.remove('active');
+            menuBtn.textContent = '\u2630';
+            menuBtn.setAttribute('aria-expanded', 'false');
+        };
 
         // Turn the nav solid white once scrolled past the hero
         window.addEventListener('scroll', () => {
@@ -561,8 +682,14 @@
         // Close menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!e.target.closest('nav')) {
-                navLinks.classList.remove('active');
-                menuBtn.textContent = '☰';
+                closeMenu();
+            }
+        });
+
+        // Close menu on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeMenu();
             }
         });
 
@@ -578,7 +705,41 @@
             document.addEventListener('touchstart', tryPlay, { once: true });
             document.addEventListener('click', tryPlay, { once: true });
         }
+
+        // Keep the big VISIT / DRINK / SHOP words on one line and on-screen in
+        // every language: 6rem is the ceiling, but shrink to fit when a longer
+        // translation (e.g. "VIZITEAZĂ", "VÁSÁROLJ") would overflow.
+        const optionsEl = document.querySelector('.options');
+        const fitOptions = () => {
+            if (!optionsEl) return;
+            const links = optionsEl.querySelectorAll('a');
+            if (!links.length) return;
+            const MAX = 96; // 6rem
+            const MIN = 24;
+            links.forEach((a) => { a.style.fontSize = MAX + 'px'; });
+            const avail = (document.documentElement.clientWidth || window.innerWidth) - 32;
+            const needed = optionsEl.scrollWidth; // row: words + gaps; column: widest word
+            if (needed > avail) {
+                const size = Math.max(MIN, Math.floor(MAX * avail / needed));
+                links.forEach((a) => { a.style.fontSize = size + 'px'; });
+            }
+        };
+
+        let fitRAF;
+        const scheduleFit = () => {
+            cancelAnimationFrame(fitRAF);
+            fitRAF = requestAnimationFrame(fitOptions);
+        };
+
+        window.addEventListener('resize', scheduleFit);
+        window.addEventListener('load', fitOptions);
+        document.addEventListener('i18n:changed', scheduleFit);
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(fitOptions);
+        }
+        scheduleFit();
     </script>
+    <script src="assets/js/i18n.js"></script>
 </body>
 
 </html>

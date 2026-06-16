@@ -5,6 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop — Menumorut</title>
+    <script>
+        // No-FOUC language bootstrap (see i18n.js).
+        (function () {
+            try {
+                var m = location.search.match(/[?&]lang=(en|ro|hu)/i);
+                var lang = (m && m[1] || localStorage.getItem('menumorut.lang') || 'en').toLowerCase();
+                if (['en', 'ro', 'hu'].indexOf(lang) === -1) lang = 'en';
+                document.documentElement.lang = lang;
+                if (lang !== 'en') {
+                    document.documentElement.className += ' i18n-cloak';
+                    setTimeout(function () {
+                        document.documentElement.classList.remove('i18n-cloak');
+                    }, 800);
+                }
+            } catch (e) { }
+        })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
@@ -21,6 +38,8 @@
             line-height: 1.6;
             font-size: 16px;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
         }
 
         /* Header */
@@ -88,6 +107,92 @@
         .nav .cart .cart-count {
             font-size: 11px;
             line-height: 1;
+        }
+
+        /* No-FOUC cloak (toggled by the head bootstrap for non-English) */
+        .i18n-cloak body {
+            visibility: hidden;
+        }
+
+        /* Language switcher */
+        .lang-switch {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            color: #fff;
+        }
+
+        .lang-toggle {
+            -webkit-appearance: none;
+            appearance: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: none;
+            border: 0;
+            margin: 0;
+            padding: 0;
+            font: inherit;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: currentColor;
+            cursor: pointer;
+        }
+
+        .lang-caret {
+            width: 9px;
+            height: 9px;
+            transition: transform 0.2s ease;
+        }
+
+        .lang-switch.open .lang-caret {
+            transform: rotate(180deg);
+        }
+
+        .lang-menu {
+            position: absolute;
+            top: calc(100% + 12px);
+            right: 0;
+            min-width: 134px;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            padding: 6px 0;
+            display: none;
+            z-index: 1100;
+        }
+
+        .lang-switch.open .lang-menu {
+            display: block;
+        }
+
+        .lang-menu button {
+            -webkit-appearance: none;
+            appearance: none;
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: 0;
+            margin: 0;
+            padding: 9px 18px;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 0.82rem;
+            letter-spacing: 0.02em;
+            text-transform: none;
+            color: #333;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .lang-menu button:hover {
+            background: #f4f3f0;
+        }
+
+        .lang-menu button.is-active {
+            font-weight: 700;
+            color: #111;
         }
 
         .mobile-menu-btn {
@@ -327,6 +432,7 @@
             }
 
             .header.scrolled .nav a,
+            .header.scrolled .lang-switch,
             .header.scrolled .mobile-menu-btn {
                 color: black;
             }
@@ -355,24 +461,32 @@
 
             .nav {
                 position: fixed;
-                top: 56px;
-                left: 0;
-                right: 0;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                height: 100dvh;
+                width: 100%;
+                max-width: 300px;
                 background: rgba(0, 0, 0, 0.92);
                 padding: 24px;
                 flex-direction: column;
+                justify-content: center;
                 align-items: center;
-                display: none;
-                margin-left: 0;
                 gap: 20px;
+                margin-left: 0;
+                transition: right 0.3s ease;
+                -webkit-backdrop-filter: blur(10px);
+                backdrop-filter: blur(10px);
             }
 
             .nav.active {
-                display: flex;
+                right: 0;
             }
 
             .nav a {
                 color: white !important;
+                font-size: 1rem;
+                padding: 0.5rem;
             }
 
             .mobile-menu-btn {
@@ -409,13 +523,13 @@
 <body>
     <header class="header">
         <a href="index.html" class="logo">MENUMORUT</a>
-        <button class="mobile-menu-btn" aria-label="Menu">☰</button>
-        <nav class="nav">
-            <a href="index.html">Home</a>
-            <a href="story.html">Story</a>
-            <a href="visit.html">Visit</a>
-            <a href="shop.html">Shop</a>
-            <a href="#" class="cart" aria-label="Cart">
+        <button class="mobile-menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="primaryNav" data-i18n-attr="aria-label:a11y.menu">☰</button>
+        <nav class="nav" id="primaryNav">
+            <a href="index.html" data-i18n="nav.home">Home</a>
+            <a href="story.html" data-i18n="nav.story">Story</a>
+            <a href="visit.html" data-i18n="nav.visit">Visit</a>
+            <a href="shop.html" data-i18n="nav.shop">Shop</a>
+            <a href="#" class="cart" aria-label="Cart" data-i18n-attr="aria-label:a11y.cart">
                 <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="9" cy="21" r="1"></circle>
                     <circle cx="20" cy="21" r="1"></circle>
@@ -423,62 +537,75 @@
                 </svg>
                 <span class="cart-count">0</span>
             </a>
+            <div class="lang-switch" role="group" aria-label="Language" data-i18n-attr="aria-label:a11y.language">
+                <button type="button" class="lang-toggle" data-lang-toggle aria-haspopup="true" aria-expanded="false">
+                    <span data-lang-current>EN</span>
+                    <svg class="lang-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                <div class="lang-menu" role="menu">
+                    <button type="button" role="menuitem" data-lang-switch="en" lang="en">English</button>
+                    <button type="button" role="menuitem" data-lang-switch="ro" lang="ro">Română</button>
+                    <button type="button" role="menuitem" data-lang-switch="hu" lang="hu">Magyar</button>
+                </div>
+            </div>
         </nav>
     </header>
 
     <section class="hero">
-        <img src="shop_hero.jpg" alt="">
-        <h1 class="hero-text">SHOP</h1>
+        <img src="assets/images/shop-hero.jpg" alt="">
+        <h1 class="hero-text" data-i18n="hero.shop">SHOP</h1>
     </section>
 
     <main class="products">
         <article class="product">
-            <div class="product-image"><img src="wine_red.jpg" alt="Menumorut Red bottle"></div>
+            <div class="product-image"><img src="assets/images/wine-red.jpg" alt="Menumorut Red bottle"></div>
             <div class="product-details">
-                <h2>Menumorut Red</h2>
+                <h2 data-i18n="shop.red.name">Menumorut Red</h2>
                 <p class="price">$50.00</p>
-                <p class="desc">A substantially bold, complex and layered wine, this is juicy in feel yet firm in
+                <p class="desc" data-i18n="shop.red.desc">A substantially bold, complex and layered wine, this is juicy in feel yet firm in
                     structured tannins. Textured and intriguing in sweet oak tones, the fruit components are weighted in
                     cassis and black cherry, with a lasting mineral finish of crushed rock.</p>
-                <label class="qty-label" for="qty-red">Quantity:</label>
+                <label class="qty-label" for="qty-red" data-i18n="shop.quantity">Quantity:</label>
                 <input class="qty" id="qty-red" type="number" value="1" min="1">
-                <button class="add-cart" type="button">Add to Cart</button>
+                <button class="add-cart" type="button" data-i18n="shop.addCart">Add to Cart</button>
             </div>
         </article>
 
         <article class="product">
-            <div class="product-image"><img src="wine_white.jpg" alt="Menumorut White bottle"></div>
+            <div class="product-image"><img src="assets/images/wine-white.jpg" alt="Menumorut White bottle"></div>
             <div class="product-details">
-                <h2>Menumorut White</h2>
+                <h2 data-i18n="shop.white.name">Menumorut White</h2>
                 <p class="price">$50.00</p>
-                <p class="desc">Flinty mineral, smoke, yellow pear, toasted hazelnut and acacia aromas follow over to the
+                <p class="desc" data-i18n="shop.white.desc">Flinty mineral, smoke, yellow pear, toasted hazelnut and acacia aromas follow over to the
                     elegant medium-bodied palate along with mature yellow apple and saline. A note of chestnut honey
                     wraps around the finish while fresh acidity keeps it balanced.</p>
-                <label class="qty-label" for="qty-white">Quantity:</label>
+                <label class="qty-label" for="qty-white" data-i18n="shop.quantity">Quantity:</label>
                 <input class="qty" id="qty-white" type="number" value="1" min="1">
-                <button class="add-cart" type="button">Add to Cart</button>
+                <button class="add-cart" type="button" data-i18n="shop.addCart">Add to Cart</button>
             </div>
         </article>
 
         <article class="product">
-            <div class="product-image"><img src="wine_rose.jpg" alt="Menumorut Rosé bottle"></div>
+            <div class="product-image"><img src="assets/images/wine-rose.jpg" alt="Menumorut Rosé bottle"></div>
             <div class="product-details">
-                <h2>Menumorut Rosé</h2>
+                <h2 data-i18n="shop.rose.name">Menumorut Rosé</h2>
                 <p class="price">$50.00</p>
-                <p class="desc">A wild strawberry and herb aroma carries a slight balsamic edge on the nose. The palate
+                <p class="desc" data-i18n="shop.rose.desc">A wild strawberry and herb aroma carries a slight balsamic edge on the nose. The palate
                     is well rounded and juicy in feel, with delicious red cherry and strawberry flavors that are honed by
                     bright acidity and a tangy slick of wet stone. Cherry skin astringency marks the close, extending the
                     fruit flavors into a medium finish.</p>
-                <label class="qty-label" for="qty-rose">Quantity:</label>
+                <label class="qty-label" for="qty-rose" data-i18n="shop.quantity">Quantity:</label>
                 <input class="qty" id="qty-rose" type="number" value="1" min="1">
-                <button class="add-cart" type="button">Add to Cart</button>
+                <button class="add-cart" type="button" data-i18n="shop.addCart">Add to Cart</button>
             </div>
         </article>
     </main>
 
     <footer class="footer">
         <div class="footer-col footer-contact">
-            <h3>CONTACT</h3>
+            <h3 data-i18n="label.contact">CONTACT</h3>
             <p>27 Bihorului Street<br>Biharia, RO 41234</p>
             <div class="contact-links">
                 <a href="mailto:contact@menumorut.com">contact@menumorut.com</a>
@@ -506,12 +633,12 @@
                     </svg>
                 </a>
             </div>
-            <small>Made by <a href="#">CB-STUDIO</a>, © 2026 Menumorut Wines</small>
+            <small><span data-i18n="footer.madeBy">Made by</span> <a href="#">CB-STUDIO</a>, © 2026 Menumorut Wines</small>
         </div>
         <div class="footer-col footer-hours">
-            <h3>HOURS</h3>
-            <p>Mon–Wed 6–11<br>Thu–Sat 4–12<br>Sun 3–10</p>
-            <a href="#" class="footer-reserve">Make a Reservation</a>
+            <h3 data-i18n="label.hours">HOURS</h3>
+            <p><span data-i18n="hours.l1">Mon–Wed 6–11</span><br><span data-i18n="hours.l2">Thu–Sat 4–12</span><br><span data-i18n="hours.l3">Sun 3–10</span></p>
+            <a href="#" class="footer-reserve" data-i18n="label.reserve">Make a Reservation</a>
         </div>
     </footer>
 
@@ -530,16 +657,30 @@
             }
         });
 
-        mobileMenuBtn.addEventListener('click', () => {
-            nav.classList.toggle('active');
+        const setMenu = (open) => {
+            nav.classList.toggle('active', open);
+            mobileMenuBtn.textContent = open ? '\u2715' : '\u2630';
+            mobileMenuBtn.setAttribute('aria-expanded', String(open));
+        };
+
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setMenu(!nav.classList.contains('active'));
         });
 
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.header')) {
-                nav.classList.remove('active');
+                setMenu(false);
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                setMenu(false);
             }
         });
     </script>
+    <script src="assets/js/i18n.js"></script>
 </body>
 
 </html>
