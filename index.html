@@ -361,6 +361,14 @@
             visibility: hidden;
         }
 
+        /* Keep the text-free background video visible during the cloak so the
+           autoplay attempt isn't fired against a hidden element (mobile/iOS
+           won't start a non-visible video, which otherwise leaves the poster
+           — grapes.jpg — stuck in place until a tap or refresh). */
+        .i18n-cloak .video-container {
+            visibility: visible;
+        }
+
         /* Language switcher */
         .lang-switch {
             position: relative;
@@ -694,15 +702,27 @@
             }
         });
 
-        // Background video: nudge autoplay on mobile browsers
+        // Background video: nudge autoplay on mobile browsers.
+        // The poster (grapes.jpg) shows whenever playback hasn't started, so a
+        // blocked autoplay looks like a stuck hero image. We therefore retry
+        // play() at every point the element may have just become playable or
+        // visible: after the no-FOUC cloak is lifted (i18n:changed), once the
+        // media is decodable (loadeddata/canplay), and on first user gesture
+        // (Low Power Mode / strict autoplay). rAF defers the retry past the
+        // paint that follows cloak removal, so the element is actually visible.
         const bgVideo = document.querySelector('.video-background');
         if (bgVideo) {
             const tryPlay = () => {
                 const p = bgVideo.play();
                 if (p && typeof p.catch === 'function') p.catch(() => { });
             };
+            const tryPlaySoon = () => requestAnimationFrame(tryPlay);
             tryPlay();
-            // Retry on first user interaction (covers Low Power Mode / strict autoplay)
+            // Re-attempt once the page is revealed and once the media is ready.
+            document.addEventListener('i18n:changed', tryPlaySoon);
+            bgVideo.addEventListener('loadeddata', tryPlay);
+            bgVideo.addEventListener('canplay', tryPlay);
+            // Final fallback: a user gesture always satisfies autoplay policies.
             document.addEventListener('touchstart', tryPlay, { once: true });
             document.addEventListener('click', tryPlay, { once: true });
         }
